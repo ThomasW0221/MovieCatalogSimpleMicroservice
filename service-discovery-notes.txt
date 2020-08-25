@@ -1,0 +1,14 @@
+eureka server -> just add @EnableEurekaServer annotation to main class
+		add properties:
+			server.port=8761
+			eureka.client.register-with-eureka=false
+			eureka.client.fetch-registry=false
+
+eureka client -> properties in pom.xml, add <spring-cloud.version></spring-cloud.version>
+		add dependency management block for spring cloud dependencies (can be found in pom.xmls)
+		@EnableEurekaClient -> not required but good for clarity
+		add spring.application.name to app properties
+
+@LoadBalanced -> does service discovery along with load balancing
+		put this on RestTemplate bean definition (or webclient) to tell it not to go to that route
+		directy, instead app name is like a hint at where to look in eureka server

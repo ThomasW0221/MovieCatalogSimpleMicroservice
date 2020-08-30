@@ -1,0 +1,20 @@
+circuit breaker -> when something is wrong, don't call that service for a little while
+		- need a fall back instead
+
+circuit breaker parameters -> 
+	when does breaker trip?
+		last n requests to consier for the decision
+		how many of those requests failed
+		the timeout duration -> at what point do you consider a request a failiure
+	when does circuit untrip?
+		how long to wait until trying again?
+
+steps to use hystrix (although it probably should not be used as it is no longer actively maintained)
+	add dependency to project
+	add @EnableCircuitBreaker to app class
+	add @HystrixCommand to methods that need circuit breaker
+
+you basically can't use private methods for @HystrixCommand methods and fallbacks. This is because hystrix
+wraps your resource (controller) in a proxy and if the call on a controller method uses a private method
+the proxy can't handle the call coming from within the resource. The solution is to extract those calls into
+different classes and you can inject those as services
